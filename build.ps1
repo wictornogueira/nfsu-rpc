@@ -15,7 +15,7 @@ if ($c) {
 New-Item -ItemType Directory -Force -Path "build\scripts" | Out-Null
 
 # Compile
-& i686-w64-mingw32-g++.exe -static-libgcc -static-libstdc++ -mthreads -I src\ -I include\ -L lib\ -l discord-rpc -shared -o build\scripts\nfsu2-rpc.asi src\discord_rpc.cpp
+& i686-w64-mingw32-g++.exe -static-libgcc -static-libstdc++ -mthreads -I src\ -I include\ -L lib\ -l discord-rpc -shared -o build\scripts\nfsu-rpc.asi src\discord_rpc.cpp
 
 if (!$LastExitCode) {
   Write-Output "Built successfully."
@@ -26,13 +26,13 @@ if (!$LastExitCode) {
   # Create dist file
   if ($d) {
     New-Item -ItemType Directory -Force -Path "dist\" | Out-Null
-    Compress-Archive -Force -Path "build\*" -DestinationPath "dist\nfsu2-rpc.zip"
+    Compress-Archive -Force -Path "build\*" -DestinationPath "dist\nfsu-rpc.zip"
   }
 
   # Copy files and launch game
-  if ($l -and $env:NFSU2) {
-    Copy-Item -Recurse -Force "build\*" -Destination "$env:NFSU2"
-    Start-Process -WorkingDirectory "$env:NFSU2" -FilePath "$env:NFSU2\SPEED2.exe"
+  if ($l -and $env:NFSU) {
+    Copy-Item -Recurse -Force "build\*" -Destination "$env:NFSU"
+    Start-Process -WorkingDirectory "$env:NFSU" -FilePath "$env:NFSU\Speed.exe"
   }
 
   exit
